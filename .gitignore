@@ -1,6 +1,7 @@
 node_modules
 dev-data
-config.env
+notes
 
+config.env
 .prettierrc
 .eslintrc.json
