@@ -3,5 +3,6 @@ dev-data
 notes
 
 config.env
+features.md
 .prettierrc
 .eslintrc.json

@@ -55,10 +55,6 @@ module.exports = (err, req, res, next) => {
 
         // to mark errors returned by mongoDB as operational
         // and give human readable errors
-        // console.log(err);
-        // console.log('----------------------------------------');
-        // console.log(error);
-
         if (err.name === 'CastError') {
             error = handleCastErrorDB(err);
             return sendErrorProd(error, res);
