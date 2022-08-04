@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema({
             message: 'Please enter matching passwords',
         },
     },
+    passwordChangedAt: {
+        type: Date,
+        // select: false,
+    },
 });
 
 // pre-save middleware:
@@ -50,6 +54,23 @@ userSchema.methods.correctPassword = async function (
     userPassword
 ) {
     return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+// instance method:
+// to check if the password was changed after the timeStamp was created
+userSchema.methods.changedPasswordAfter = function (JWTTimeStamp) {
+    if (this.passwordChangedAt) {
+        // getting passwords in seconds
+        const passwordChangedTimeStamp = parseInt(
+            this.passwordChangedAt.getTime() / 1000,
+            10
+        );
+        // if token was created before passwordChanged
+        return JWTTimeStamp < passwordChangedTimeStamp;
+    }
+
+    // false means NOT changed
+    return false;
 };
 
 const User = mongoose.model('User', userSchema);
